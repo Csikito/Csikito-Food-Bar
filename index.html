@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/pngwing.com.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <title>Csikito Food Bar</title>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav container">
+        <div class="logo">
+          <img src="./images/pngwing.com.png" alt="logo" class="logo" />
+        </div>
+        <div class="nav__menu js-nav__menu">
+          <ul class="nav__list">
+            <li>
+              <a href="#" class="nav__link js-food-bar">Food-Bar</a>
+            </li>
+            <li>
+              <a href="#" class="nav__link js-category">Category</a>
+            </li>
+            <li><a href="#" class="nav__link js-contact">Contact</a></li>
+          </ul>
+          <div class="nav__close js-nav__close">
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
+        <div class="nav__toggle js-nav__toggle">
+          <i class="ri-menu-4-line"></i>
+        </div>
+      </nav>
+    </header>
+    <main class="main container">
+      <section class="random">
+        <div class="randomMealContainer js-randomMealContainer"></div>
+        <div class="popup-container hidden container js-popup-container">
+          <div class="popup">
+            <div class="close-popup js-close-popup">
+              <i class="ri-close-circle-line"></i>
+            </div>
+            <div class="random__meal__info js-random__meal__info"></div>
+          </div>
+        </div>
+      </section>
+      <section class="category">
+        <div class="categoryContainer js-categoryContainer"></div>
+        <div class="mealContainer js-mealContainer"></div>
+        <div class="pagination js-pagination"></div>
+      </section>
+      <section class="contact js-contactContainer hidden">
+        <form action="#" class="">
+          <h2 class="section__title">Üzenet</h2>
+          <div class="input__list">
+            <input
+              type="text"
+              placeholder="Név"
+              class="input__info"
+              id="name"
+            />
+            <input
+              type="email"
+              placeholder="E-mail"
+              class="input__info"
+              id="email"
+            />
+
+            <textarea
+              class="input__info"
+              name="message"
+              placeholder="Üzenet"
+              id="message"
+            ></textarea>
+          </div>
+          <button class="btn btn__contact">Küldés</button>
+        </form>
+      </section>
+    </main>
+    <footer class="footer section random js-footer">
+      <div class="footer__social">
+        <a
+          href="https://www.facebook.com/"
+          target="_blank"
+          class="footer__social-link"
+          ><i class="ri-facebook-fill"></i
+        ></a>
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          class="footer__social-link"
+          ><i class="ri-instagram-fill"></i
+        ></a>
+        <a
+          href="https://www.twitter.com/"
+          target="_blank"
+          class="footer__social-link"
+          ><i class="ri-twitter-fill"></i
+        ></a>
+      </div>
+      <p class="footer__copy">&#169; Csikitó. Minden jog fenntartva.</p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
