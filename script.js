@@ -42,36 +42,7 @@ let rows = 5;
 
 function showMealInfo(mealData) {
   randomMealInfo.innerHTML = "";
-
-  const ingredients = [];
-  //get ingredients and measures
-  for (let i = 1; i <= 20; i++) {
-    if (mealData["strIngredient" + i]) {
-      ingredients.push(
-        `${mealData["strIngredient" + i]} - ${mealData["strMeasure" + i]}`
-      );
-    } else {
-      break;
-    }
-  }
-
-  randomMealInfo.innerHTML = `
-   
-      <h1>${mealData.strMeal}</h1>
-      <img
-        src="${mealData.strMealThumb}"
-        alt="${mealData.strMeal}"
-      />
-      <h3>Instructions</h3>
-      <p>
-      ${mealData.strInstructions}
-      </p>
-      <h3>Ingrediets</h3>
-      <ul>
-        ${ingredients.map((ing) => `<li>${ing}</li>`).join("")}
-      </ul>
-    
-     `;
+  randomMealInfo.innerHTML = renderMeal(mealData);
   //show the popup
   mealPopup.classList.remove("hidden");
 }
@@ -149,7 +120,6 @@ function fetchCategory() {
     .then((data) => {
       categories = data.categories;
     });
-  /***Kérdés hogy mért kell Promis ide?? amikor a return-al is promist kapunk vissza***/
 }
 
 function loaderCategory() {
@@ -231,15 +201,12 @@ function PaginationButton(page, items) {
     current_page = page;
     nextPageLoaderMeal(items, rows, page);
     window.scrollTo(0, 550);
-    //scrollUp();
     let current_btn = document.querySelector(".pagination button.active");
     current_btn.classList.remove("active");
     button.classList.add("active");
   });
   return button;
 }
-
-function scrollUp() {}
 
 function nextPageLoaderMeal(meals, rows, current_page) {
   const mealList = displayList(meals, rows, current_page);
@@ -259,20 +226,16 @@ function displayList(items, rows_per_page, page) {
   let paginatedItems = items.slice(start, end);
   return paginatedItems;
 }
-
+/*******************************************************************************/
 function loaderMeal(response) {
   let meals = response.meals;
   const mealList = displayList(meals, rows, current_page);
   setupPagination(meals, paginationContainer, rows);
-  /*****************************
-   const mealList = response.meals.slice(0, 4);
-   * **************************/
   let mealPromiseList = mealList.map((meal) =>
     fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`
     ).then((res) => res.json())
   );
-  /*********ÁTNÉZNIII****/ //
   Promise.allSettled(mealPromiseList).then(displayMealDetails);
 }
 

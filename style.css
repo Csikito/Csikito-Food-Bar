@@ -259,7 +259,7 @@ img.logo {
 .popup-container {
   position: absolute;
   width: 90vw;
-  background-color: rgba(77, 36, 0, 1);
+  background-color: rgb(53, 37, 17);
   -webkit-text-stroke: 1px white;
   top: 0rem;
   left: 50%;
