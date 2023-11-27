@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="./images/pngwing.com.png"
-      type="image/x-icon"
-    />
+    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
@@ -20,12 +16,12 @@
     <header class="header">
       <nav class="nav container">
         <div class="logo">
-          <img src="./images/pngwing.com.png" alt="logo" class="logo" />
+          <img src="./images/logo.png" alt="logo" class="logo" />
         </div>
         <div class="nav__menu js-nav__menu">
           <ul class="nav__list">
             <li>
-              <a href="#" class="nav__link js-food-bar">Food-Bar</a>
+              <a href="#" class="nav__link js-food-bar">Random Food</a>
             </li>
             <li>
               <a href="#" class="nav__link js-category">Category</a>
@@ -44,14 +40,9 @@
     <main class="main container">
       <section class="random">
         <div class="randomMealContainer js-randomMealContainer"></div>
-        <div class="popup-container hidden container js-popup-container">
-          <div class="popup">
-            <div class="close-popup js-close-popup">
-              <i class="ri-close-circle-line"></i>
-            </div>
-            <div class="random__meal__info js-random__meal__info"></div>
-          </div>
-        </div>
+        <div
+          class="random__meal__info container hidden js-random__meal__info"
+        ></div>
       </section>
       <section class="category">
         <div class="categoryContainer js-categoryContainer"></div>

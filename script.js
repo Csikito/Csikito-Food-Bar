@@ -18,9 +18,8 @@ navMenuArray.forEach((e) => {
 });
 
 /************************************************************************/
+
 const randomMealContainer = document.querySelector(".js-randomMealContainer");
-const mealPopup = document.querySelector(".js-popup-container");
-const closePopup = document.querySelector(".js-close-popup");
 const contact = document.querySelector(".js-contact");
 const contactContainer = document.querySelector(".js-contactContainer");
 const footer = document.querySelector(".js-footer");
@@ -42,14 +41,12 @@ let rows = 5;
 
 function showMealInfo(mealData) {
   randomMealInfo.innerHTML = "";
-  randomMealInfo.innerHTML = renderMeal(mealData);
-  //show the popup
-  mealPopup.classList.remove("hidden");
-}
+  randomMealInfo.innerHTML = renderRandomMeal(mealData);
 
-closePopup.addEventListener("click", () => {
-  mealPopup.classList.add("hidden");
-});
+  //show the popup
+  randomMealContainer.classList.add("hidden");
+  randomMealInfo.classList.remove("hidden");
+}
 
 function fetchRandomMeal() {
   return fetch(`https://www.themealdb.com/api/json/v1/1/random.php`).then(
@@ -57,7 +54,35 @@ function fetchRandomMeal() {
   );
 }
 
+function renderRandomMeal(meal) {
+  const ingredient = renderIngredient(meal);
+  return `
+  <div class="random__meal__item">
+       <div class="ingredient">
+        <div class ="left__side">
+            <h2>${meal.strMeal} <a class="youtube__btn" href="${meal.strYoutube}" target="_blank">[<i class="ri-youtube-line"></i>]</a></h2>
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+            </div>
+            <div class ="right__side"> 
+            <h3>Ingrediets</h3>
+            ${ingredient}
+         
+        </div>
+      </div>
+      <div class="instructions"> 
+        <h3>Instructions</h3>
+        <p>${meal.strInstructions}</p>
+      </div>
+  </div>    
+        `;
+}
+
 function randomMeal() {
+  console.log(!randomMealInfo.classList.contains("hidden"));
+  if (!randomMealInfo.classList.contains("hidden")) {
+    randomMealInfo.classList.add("hidden");
+  }
+  randomMealContainer.classList.remove("hidden");
   contactContainer.classList.add("hidden");
   footer.classList.add("random");
   categoryContainer.innerHTML = "";
@@ -69,18 +94,39 @@ function randomMeal() {
 
 function addMeal(mealData) {
   randomMealContainer.innerHTML = `
-  <div class="meal__random">
-  <h2>Random Meal</h2>  
+ 
+  <div class="meal__random frontMealContainer js-frontMealContainer is-flipped">
+    <div>
+      <h2>Let's see what you will cook today.</h2>
+      <img
+      src="./images/card_question.png"
+      alt="card_question"
+      />
+    </div>
+    </div>
+  <div class="meal__random backMealContainer js-backMealContainer">
+    <h2>${mealData.meals[0].strMeal}</h2>  
       <img
         src="${mealData.meals[0].strMealThumb}"
         alt="${mealData.meals[0].strMeal}"
-      />
+      /> 
+      <button class="btn js-show__recipe">Show me the recipe</button>
     </div>
-    <div class="meal__text">
-      <h4>${mealData.meals[0].strMeal}</h4>
-    </div>
+    
+    
   `;
+
+  /** Card flipped **/
+  const frontCard = document.querySelector(".js-frontMealContainer");
+  const backCard = document.querySelector(".js-backMealContainer");
+
   randomMealContainer.addEventListener("click", () => {
+    frontCard.classList.remove("is-flipped");
+    frontCard.lastElementChild.classList.add("is-spinning");
+    backCard.classList.add("is-flipped");
+  });
+
+  backCard.addEventListener("click", () => {
     showMealInfo(mealData.meals[0]);
   });
 }
@@ -125,8 +171,8 @@ function fetchCategory() {
 function loaderCategory() {
   contactContainer.classList.add("hidden");
   footer.classList.remove("random");
-  if (mealPopup !== "hidden") {
-    mealPopup.classList.add("hidden");
+  if (randomMealInfo !== "hidden") {
+    randomMealInfo.classList.add("hidden");
   }
 
   if (categories === null) {
