@@ -105,7 +105,7 @@ img {
 .section__title {
   font-size: var(--big-font-size);
   text-align: center;
-  margin-bottom: var(--mb-2-5);
+  margin-bottom: var(--mb-2);
 }
 .section__title-gradient {
   background: var(--text-gradient);
@@ -130,7 +130,7 @@ img {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /***************************************************************************************/
@@ -225,9 +225,8 @@ img.logo {
 
 .randomMealContainer {
   position: relative;
-
-  width: 450px;
-  min-height: 650px;
+  max-width: 440px;
+  min-height: 570px;
   height: 100%;
   margin: auto;
   border-radius: 1rem;
@@ -382,6 +381,9 @@ img.logo {
 }
 
 /***************--Category--********************/
+.category {
+  padding: 0 1rem;
+}
 
 .categoryContainer {
   display: grid;
@@ -436,23 +438,34 @@ img.logo {
 }
 
 .mealContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   text-align: center;
-  padding: 1rem;
 }
 
 .meal-item {
+  width: 300px;
   background-color: rgba(255, 167, 96, 0.4);
-  margin: 2rem;
-  padding: 2rem;
+  margin: 1rem;
+  padding: 1rem;
   border-radius: 1rem;
+  box-shadow: 1px 1px 2px var(--text-color);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.meal-item:hover {
+  box-shadow: 1px 1px 5px var(--white-color);
+  transform: scale(1.01);
 }
 
 .meal-item img {
-  max-width: 400px;
-  margin: 1rem;
+  width: 100%;
+  border-radius: 0.5rem;
 }
 
-.meal-item h3 {
+.meal-item h2 {
   display: inline-block;
   margin: 1rem;
   border-bottom: 2px solid var(--text-color);
@@ -481,10 +494,10 @@ img.logo {
 }
 
 /****************** Contact ***********************/
-
-.contact.hidden {
-  display: none;
+.contact {
+  margin: 0 2rem;
 }
+
 .contact__lists {
   row-gap: 2rem;
   padding-bottom: 3rem;
@@ -539,7 +552,7 @@ textarea.input__info {
   border: 2px solid var(--text-color);
   border-radius: 0.5rem;
   width: 100%;
-  height: 350px;
+  height: 300px;
   resize: none;
 }
 
@@ -559,7 +572,7 @@ textarea:focus {
   color: whitesmoke;
   border: 2px solid var(--text-color);
   border-radius: 0.5rem;
-  padding: var(--mb-1);
+  padding: var(--mb-0-75);
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -568,14 +581,6 @@ textarea:focus {
   border-color: var(--white-color);
   color: var(--text-color-light);
 }
-/*
--
--
-*
-*
-*
-*
-*/
 
 /******************Footer*********************/
 .footer {
@@ -607,9 +612,6 @@ textarea:focus {
   color: rgb(28, 147, 228);
 }
 
-.footer.random {
-  display: none;
-}
 /***************SCROLLBAR***************/
 ::-webkit-scrollbar {
   width: 10px;
@@ -695,9 +697,9 @@ textarea:focus {
     left: 45%;
   }
 
-  .randomMealContainer {
+  /* .randomMealContainer {
     width: 80%;
-  }
+  } */
 
   .random__meal__info {
     padding: auto;
@@ -710,10 +712,10 @@ textarea:focus {
 }
 
 @media screen and (max-width: 449px) {
-  .randomMealContainer {
+  /* .randomMealContainer {
     min-height: 550px;
     width: auto;
-  }
+  } */
 
   .meal-item {
     padding: 0.5rem;
@@ -750,5 +752,9 @@ textarea:focus {
   }
   .mealContainer .meal-item {
     margin: 2rem 0;
+  }
+
+  .footer__social-link i {
+    padding: 0;
   }
 }

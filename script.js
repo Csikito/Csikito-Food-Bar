@@ -35,13 +35,13 @@ const paginationContainer = document.querySelector(".js-pagination");
 let categories = null;
 let id = null;
 let current_page = 1;
-let rows = 5;
+let rows = 6;
 
 /***************** RANDOM MEAL *****************/
 
 function showMealInfo(mealData) {
   randomMealInfo.innerHTML = "";
-  randomMealInfo.innerHTML = renderRandomMeal(mealData);
+  randomMealInfo.innerHTML = renderMealDetails(mealData);
 
   //show the popup
   randomMealContainer.classList.add("hidden");
@@ -54,37 +54,12 @@ function fetchRandomMeal() {
   );
 }
 
-function renderRandomMeal(meal) {
-  const ingredient = renderIngredient(meal);
-  return `
-  <div class="random__meal__item">
-       <div class="ingredient">
-        <div class ="left__side">
-            <h2>${meal.strMeal} <a class="youtube__btn" href="${meal.strYoutube}" target="_blank">[<i class="ri-youtube-line"></i>]</a></h2>
-            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-            </div>
-            <div class ="right__side"> 
-            <h3>Ingrediets</h3>
-            ${ingredient}
-         
-        </div>
-      </div>
-      <div class="instructions"> 
-        <h3>Instructions</h3>
-        <p>${meal.strInstructions}</p>
-      </div>
-  </div>    
-        `;
-}
-
 function randomMeal() {
-  console.log(!randomMealInfo.classList.contains("hidden"));
   if (!randomMealInfo.classList.contains("hidden")) {
     randomMealInfo.classList.add("hidden");
   }
   randomMealContainer.classList.remove("hidden");
   contactContainer.classList.add("hidden");
-  footer.classList.add("random");
   categoryContainer.innerHTML = "";
   mealContainer.innerHTML = "";
   paginationContainer.innerHTML = "";
@@ -110,7 +85,7 @@ function addMeal(mealData) {
         src="${mealData.meals[0].strMealThumb}"
         alt="${mealData.meals[0].strMeal}"
       /> 
-      <button class="btn js-show__recipe">Show me the recipe</button>
+      <button class="btn js-show__recipe">Show recipe</button>
     </div>
     
     
@@ -139,7 +114,9 @@ function renderCategory(category, wide = false) {
     categoryContainer.classList.remove("wide");
   }
   return `
-            <div class="category-item  ${wide === true ? "wide" : ""}" 
+            <div class="category-item js-category-item  ${
+              wide === true ? "wide" : ""
+            }" 
   data-id="${category.idCategory}">
             <h2>${category.strCategory}</h2>
             <img src="${category.strCategoryThumb}" alt="${
@@ -169,8 +146,10 @@ function fetchCategory() {
 }
 
 function loaderCategory() {
+  categoryContainer.classList.remove("hidden");
+  paginationContainer.classList.remove("hidden");
+  randomMealContainer.classList.add("hidden");
   contactContainer.classList.add("hidden");
-  footer.classList.remove("random");
   if (randomMealInfo !== "hidden") {
     randomMealInfo.classList.add("hidden");
   }
@@ -198,21 +177,37 @@ function renderIngredient(data) {
 }
 
 function renderMeal(meal) {
+  return `
+        <div class="meal-item js-meal-item" data-id="${meal.idMeal}">
+          <h2>${meal.strMeal}</h2>
+       
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+       
+        </div>
+
+        `;
+}
+function renderMealDetails(meal) {
   const ingredient = renderIngredient(meal);
   return `
-        <div class="meal-item">
-        <h2>${meal.strMeal}</h2>
-        <div>
-        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-        </div>
-        <h3>Instructions</h3>
-        <p>${meal.strInstructions}</p>
-        <h3>Ingrediets</h3>
-            ${ingredient}
-        </div>
-        
-        
-        
+  <div class="random__meal__item">
+  <div class="ingredient">
+   <div class ="left__side">
+       <h2>${meal.strMeal} <a class="youtube__btn" href="${meal.strYoutube}" target="_blank">[<i class="ri-youtube-line"></i>]</a></h2>
+       <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+       </div>
+       <div class ="right__side"> 
+       <h3>Ingrediets</h3>
+       ${ingredient}
+    
+   </div>
+ </div>
+ <div class="instructions"> 
+   <h3>Instructions</h3>
+   <p>${meal.strInstructions}</p>
+ </div>
+</div>    
+
         `;
 }
 
@@ -226,7 +221,23 @@ function displayMealDetails(mealResponse) {
     .map((response) => response.value.meals[0])
     .map((meal) => renderMeal(meal))
     .join("");
+
+  const mealItem = document.querySelectorAll(".js-meal-item");
+  mealItem.forEach((item) =>
+    item.addEventListener("click", (e) => {
+      categoryContainer.classList.add("hidden");
+      paginationContainer.classList.add("hidden");
+
+      const id = e.target.dataset.id || e.target.parentElement.dataset.id;
+      mealContainer.innerHTML = mealResponse
+        .filter(isPromiseFulfilled)
+        .map((response) => response.value.meals[0])
+        .filter((items) => items.idMeal === id)
+        .map((item) => renderMealDetails(item));
+    })
+  );
 }
+
 /************************ Pagination ********************************/
 
 function setupPagination(items, wrapper, rows_per_page) {
@@ -317,6 +328,8 @@ function clickContact() {
   mealContainer.innerHTML = "";
   categoryContainer.innerHTML = "";
   paginationContainer.innerHTML = "";
+  randomMealContainer.classList.add("hidden");
+  randomMealInfo.classList.add("hidden");
   let data = contactContainer.classList[contactContainer.classList.length - 1];
   if (data == "hidden") {
     contactContainer.classList.remove("hidden");
