@@ -280,7 +280,6 @@ function renderIngredient(data) {
 }
 
 function renderMealDetails(meal) {
-  console.log(meal);
   const ingredient = renderIngredient(meal);
   const video = meal.strYoutube
     ? `<a class="youtube__btn" href="${meal.strYoutube}" target="_blank">[<i class="ri-youtube-line"></i>]</a>`
